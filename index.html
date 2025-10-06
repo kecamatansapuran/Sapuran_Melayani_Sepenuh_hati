@@ -1,177 +1,100 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>percobaan</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Linktree - MTs Berbaur Jolontoro Sapuran</title>
   <style>
-    /* Reset & background */
-    html,body {
-      height: 100%;
-      margin: 0;
-      background: linear-gradient(180deg, #0b3d91 0%, #1e6ee8 100%);
-      color: #ffffff;
-      font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-    }
-
-    /* Container penuh layar, center */
-    .clock-wrap {
-      height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #3b82f6, #9333ea);
+      color: white;
       text-align: center;
-      padding: 1rem;
-      box-sizing: border-box;
-    }
-
-    /* Jam besar */
-    .clock {
-      font-weight: 700;
-      letter-spacing: 0.02em;
-      /* responsif: ukuran akan mengikuti viewport */
-      font-size: clamp(48px, 18vw, 220px);
-      line-height: 1;
       margin: 0;
-      font-family: "Courier New", Courier, monospace;
+      padding: 0;
+      min-height: 100vh;
     }
 
-    /* Tanggal / keterangan kecil */
-    .sub {
-      margin-top: 0.5rem;
-      font-size: clamp(14px, 2.8vw, 32px);
-      opacity: 0.95;
+    .container {
+      max-width: 500px;
+      margin: auto;
+      padding: 40px 20px;
     }
 
-    /* Blinking colon (opsional) */
-    .colon {
-      display: inline-block;
-      animation: blink 1s steps(1, start) infinite;
-    }
-    @keyframes blink {
-      50% { opacity: 0; }
+    .profile-img {
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 4px solid white;
+      margin-bottom: 20px;
     }
 
-    /* Tombol kecil untuk pengaturan (opsional) */
-    .controls {
-      position: fixed;
-      top: 12px;
-      right: 12px;
-      display: flex;
-      gap: 8px;
+    h1 {
+      font-size: 22px;
+      margin-bottom: 5px;
     }
-    .btn {
-      background: rgba(255,255,255,0.12);
-      border: 1px solid rgba(255,255,255,0.18);
-      color: #fff;
-      padding: 8px 12px;
-      border-radius: 8px;
-      cursor: pointer;
+
+    p {
       font-size: 14px;
-      backdrop-filter: blur(4px);
+      margin-bottom: 25px;
+      opacity: 0.9;
     }
-    .btn:active { transform: translateY(1px); }
+
+    a.button {
+      display: block;
+      background-color: white;
+      color: #1f2937;
+      text-decoration: none;
+      margin: 10px auto;
+      padding: 12px 20px;
+      border-radius: 10px;
+      width: 90%;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+
+    a.button:hover {
+      background-color: #e5e7eb;
+      transform: translateY(-3px);
+    }
+
+    iframe {
+      width: 100%;
+      height: 250px;
+      border-radius: 15px;
+      margin-top: 20px;
+      border: none;
+    }
+
+    footer {
+      margin-top: 30px;
+      font-size: 12px;
+      opacity: 0.8;
+    }
   </style>
 </head>
 <body>
-  <div class="controls" aria-hidden="true">
-    <button id="toggleFormat" class="btn" title="Ganti 24/12 jam">24 jam</button>
-    <button id="toggleSeconds" class="btn" title="Tampilkan/sembunyikan detik">Detik: ON</button>
+
+  <div class="container">
+    <!-- Foto Profil -->
+    <img class="profile-img" src="data:image/png;base64,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" alt="Foto Profil">
+
+    <!-- Judul -->
+    <h1>KECAMATAN SAPURAN</h1>
+    <p>Menu Layanan & Media Pembelajaran</p>
+
+    <!-- Tombol Link -->
+    <a class="button" href="https://script.google.com/macros/s/AKfycbxgi7OdesOQGEyDjP0c-Anw-gKNuMtOoYcT_o8dzDSvSFBJ038khN1rnrnNCWO2uzcX8g/exec" target="_blank">🌐 Buka Layanan WebApp</a>
+
+    <!-- Embed YouTube -->
+    <iframe src="https://www.youtube.com/embed/mXoKxmje2ps" allowfullscreen></iframe>
+
+    <!-- Footer -->
+    <footer>
+      Author Widodo Tamvans
+    </footer>
   </div>
 
-  <div class="clock-wrap">
-    <h1 id="time" class="clock">00:00:00</h1>
-    <div id="date" class="sub"></div>
-  </div>
-
-  <script>
-    // Pengaturan awal
-    let showSeconds = true;     // tampilkan detik
-    let use24Hour = true;       // true = 24 jam, false = 12 jam (AM/PM)
-
-    const timeEl = document.getElementById('time');
-    const dateEl = document.getElementById('date');
-    const btnFormat = document.getElementById('toggleFormat');
-    const btnSeconds = document.getElementById('toggleSeconds');
-
-    // Format tanggal lokal (bahasa Indonesia)
-    function formatDate(d) {
-      const options = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
-      return d.toLocaleDateString('id-ID', options);
-    }
-
-    // Fungsi update jam
-    function updateClock() {
-      const now = new Date();
-      let hours = now.getHours();
-      const minutes = now.getMinutes();
-      const seconds = now.getSeconds();
-
-      let ampm = '';
-      if (!use24Hour) {
-        ampm = hours >= 12 ? ' PM' : ' AM';
-        hours = hours % 12;
-        if (hours === 0) hours = 12;
-      }
-
-      // padding angka
-      const hh = String(hours).padStart(2, '0');
-      const mm = String(minutes).padStart(2, '0');
-      const ss = String(seconds).padStart(2, '0');
-
-      // Buat tampilan dengan/ tanpa detik
-      let timeStr = showSeconds ? `${hh}<span class="colon">:</span>${mm}<span class="colon">:</span>${ss}` 
-                                : `${hh}<span class="colon">:</span>${mm}`;
-
-      timeEl.innerHTML = timeStr + ampm;
-      dateEl.textContent = formatDate(now);
-    }
-
-    // Tombol kontrol
-    btnFormat.addEventListener('click', () => {
-      use24Hour = !use24Hour;
-      btnFormat.textContent = use24Hour ? '24 jam' : '12 jam';
-      updateClock();
-    });
-
-    btnSeconds.addEventListener('click', () => {
-      showSeconds = !showSeconds;
-      btnSeconds.textContent = 'Detik: ' + (showSeconds ? 'ON' : 'OFF');
-      updateClock();
-    });
-
-    // Jalankan update tiap 250ms untuk akurasi tampilan blink dan perubahan detik
-    updateClock();
-    setInterval(updateClock, 250);
-
-    // Optional: tekan spasi untuk toggle fullscreen (berguna untuk layar informasi)
-    document.addEventListener('keydown', (e) => {
-      if (e.code === 'Space') {
-        if (!document.fullscreenElement) {
-          document.documentElement.requestFullscreen().catch(()=>{});
-        } else {
-          document.exitFullscreen().catch(()=>{});
-        }
-      }
-    });
-
-    // Untuk UX mobile: sentuh dua kali layar untuk toggle fullscreen
-    let lastTap = 0;
-    document.addEventListener('touchend', (ev) => {
-      const currentTime = new Date().getTime();
-      const tapLength = currentTime - lastTap;
-      if (tapLength < 300 && tapLength > 0) {
-        if (!document.fullscreenElement) {
-          document.documentElement.requestFullscreen().catch(()=>{});
-        } else {
-          document.exitFullscreen().catch(()=>{});
-        }
-      }
-      lastTap = currentTime;
-    });
-  </script>
 </body>
 </html>
