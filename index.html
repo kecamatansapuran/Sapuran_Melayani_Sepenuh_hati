@@ -1,1 +1,177 @@
-Put your HTML text herenyobaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Jam Digital — Layar Penuh</title>
+  <style>
+    /* Reset & background */
+    html,body {
+      height: 100%;
+      margin: 0;
+      background: linear-gradient(180deg, #0b3d91 0%, #1e6ee8 100%);
+      color: #ffffff;
+      font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* Container penuh layar, center */
+    .clock-wrap {
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      text-align: center;
+      padding: 1rem;
+      box-sizing: border-box;
+    }
+
+    /* Jam besar */
+    .clock {
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      /* responsif: ukuran akan mengikuti viewport */
+      font-size: clamp(48px, 18vw, 220px);
+      line-height: 1;
+      margin: 0;
+      font-family: "Courier New", Courier, monospace;
+    }
+
+    /* Tanggal / keterangan kecil */
+    .sub {
+      margin-top: 0.5rem;
+      font-size: clamp(14px, 2.8vw, 32px);
+      opacity: 0.95;
+    }
+
+    /* Blinking colon (opsional) */
+    .colon {
+      display: inline-block;
+      animation: blink 1s steps(1, start) infinite;
+    }
+    @keyframes blink {
+      50% { opacity: 0; }
+    }
+
+    /* Tombol kecil untuk pengaturan (opsional) */
+    .controls {
+      position: fixed;
+      top: 12px;
+      right: 12px;
+      display: flex;
+      gap: 8px;
+    }
+    .btn {
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.18);
+      color: #fff;
+      padding: 8px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 14px;
+      backdrop-filter: blur(4px);
+    }
+    .btn:active { transform: translateY(1px); }
+  </style>
+</head>
+<body>
+  <div class="controls" aria-hidden="true">
+    <button id="toggleFormat" class="btn" title="Ganti 24/12 jam">24 jam</button>
+    <button id="toggleSeconds" class="btn" title="Tampilkan/sembunyikan detik">Detik: ON</button>
+  </div>
+
+  <div class="clock-wrap">
+    <h1 id="time" class="clock">00:00:00</h1>
+    <div id="date" class="sub"></div>
+  </div>
+
+  <script>
+    // Pengaturan awal
+    let showSeconds = true;     // tampilkan detik
+    let use24Hour = true;       // true = 24 jam, false = 12 jam (AM/PM)
+
+    const timeEl = document.getElementById('time');
+    const dateEl = document.getElementById('date');
+    const btnFormat = document.getElementById('toggleFormat');
+    const btnSeconds = document.getElementById('toggleSeconds');
+
+    // Format tanggal lokal (bahasa Indonesia)
+    function formatDate(d) {
+      const options = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
+      return d.toLocaleDateString('id-ID', options);
+    }
+
+    // Fungsi update jam
+    function updateClock() {
+      const now = new Date();
+      let hours = now.getHours();
+      const minutes = now.getMinutes();
+      const seconds = now.getSeconds();
+
+      let ampm = '';
+      if (!use24Hour) {
+        ampm = hours >= 12 ? ' PM' : ' AM';
+        hours = hours % 12;
+        if (hours === 0) hours = 12;
+      }
+
+      // padding angka
+      const hh = String(hours).padStart(2, '0');
+      const mm = String(minutes).padStart(2, '0');
+      const ss = String(seconds).padStart(2, '0');
+
+      // Buat tampilan dengan/ tanpa detik
+      let timeStr = showSeconds ? `${hh}<span class="colon">:</span>${mm}<span class="colon">:</span>${ss}` 
+                                : `${hh}<span class="colon">:</span>${mm}`;
+
+      timeEl.innerHTML = timeStr + ampm;
+      dateEl.textContent = formatDate(now);
+    }
+
+    // Tombol kontrol
+    btnFormat.addEventListener('click', () => {
+      use24Hour = !use24Hour;
+      btnFormat.textContent = use24Hour ? '24 jam' : '12 jam';
+      updateClock();
+    });
+
+    btnSeconds.addEventListener('click', () => {
+      showSeconds = !showSeconds;
+      btnSeconds.textContent = 'Detik: ' + (showSeconds ? 'ON' : 'OFF');
+      updateClock();
+    });
+
+    // Jalankan update tiap 250ms untuk akurasi tampilan blink dan perubahan detik
+    updateClock();
+    setInterval(updateClock, 250);
+
+    // Optional: tekan spasi untuk toggle fullscreen (berguna untuk layar informasi)
+    document.addEventListener('keydown', (e) => {
+      if (e.code === 'Space') {
+        if (!document.fullscreenElement) {
+          document.documentElement.requestFullscreen().catch(()=>{});
+        } else {
+          document.exitFullscreen().catch(()=>{});
+        }
+      }
+    });
+
+    // Untuk UX mobile: sentuh dua kali layar untuk toggle fullscreen
+    let lastTap = 0;
+    document.addEventListener('touchend', (ev) => {
+      const currentTime = new Date().getTime();
+      const tapLength = currentTime - lastTap;
+      if (tapLength < 300 && tapLength > 0) {
+        if (!document.fullscreenElement) {
+          document.documentElement.requestFullscreen().catch(()=>{});
+        } else {
+          document.exitFullscreen().catch(()=>{});
+        }
+      }
+      lastTap = currentTime;
+    });
+  </script>
+</body>
+</html>
