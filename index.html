@@ -7,7 +7,7 @@
   <style>
     body {
       font-family: 'Poppins', sans-serif;
-      background: linear-gradient(135deg, #3b82f6, #9333ea);
+      background: url('https://drive.google.com/uc?export=view&id=1T22o_D4j8gIFj1VE-htjaUfqHEMEjIH4') center/cover no-repeat fixed;
       color: white;
       text-align: center;
       margin: 0;
@@ -19,6 +19,9 @@
       max-width: 500px;
       margin: auto;
       padding: 40px 20px;
+      background: rgba(0, 0, 0, 0.55);
+      border-radius: 20px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.5);
     }
 
     .profile-img {
@@ -37,8 +40,14 @@
 
     p {
       font-size: 14px;
-      margin-bottom: 25px;
+      margin-bottom: 15px;
       opacity: 0.9;
+    }
+
+    #jam-digital {
+      font-size: 28px;
+      font-weight: bold;
+      margin-bottom: 25px;
     }
 
     a.button {
@@ -51,12 +60,12 @@
       border-radius: 10px;
       width: 90%;
       font-weight: bold;
-      transition: 0.3s;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
 
     a.button:hover {
-      background-color: #e5e7eb;
-      transform: translateY(-3px);
+      transform: scale(1.03);
+      box-shadow: 0 4px 15px rgba(255, 255, 255, 0.3);
     }
 
     iframe {
@@ -65,6 +74,35 @@
       border-radius: 15px;
       margin-top: 20px;
       border: none;
+    }
+
+    .social-links {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin-top: 25px;
+    }
+
+    .social-links a {
+      background: white;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .social-links a:hover {
+      transform: scale(1.1);
+      box-shadow: 0 4px 15px rgba(255, 255, 255, 0.3);
+    }
+
+    .social-links img {
+      width: 28px;
+      height: 28px;
     }
 
     footer {
@@ -78,11 +116,14 @@
 
   <div class="container">
     <!-- Foto Profil -->
-    <img class="profile-img" src="data:image/png;base64,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" alt="Foto Profil">
+    <img class="profile-img" src="https://drive.google.com/uc?export=view&id=1T22o_D4j8gIFj1VE-htjaUfqHEMEjIH4" alt="Foto Profil">
 
     <!-- Judul -->
     <h1>KECAMATAN SAPURAN</h1>
     <p>Menu Layanan & Media Pembelajaran</p>
+
+    <!-- Jam Digital -->
+    <div id="jam-digital"></div>
 
     <!-- Tombol Link -->
     <a class="button" href="https://script.google.com/macros/s/AKfycbxgi7OdesOQGEyDjP0c-Anw-gKNuMtOoYcT_o8dzDSvSFBJ038khN1rnrnNCWO2uzcX8g/exec" target="_blank">🌐 Buka Layanan WebApp</a>
@@ -90,11 +131,32 @@
     <!-- Embed YouTube -->
     <iframe src="https://www.youtube.com/embed/mXoKxmje2ps" allowfullscreen></iframe>
 
+    <!-- Menu Media Sosial -->
+    <div class="social-links">
+      <a href="https://www.facebook.com/" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" alt="Facebook"></a>
+      <a href="https://www.instagram.com/" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" alt="Instagram"></a>
+      <a href="https://www.youtube.com/" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" alt="YouTube"></a>
+      <a href="https://wa.me/628123456789" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" alt="WhatsApp"></a>
+      <a href="https://www.tiktok.com/" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/3046/3046121.png" alt="TikTok"></a>
+    </div>
+
     <!-- Footer -->
     <footer>
       Author Widodo Tamvans
     </footer>
   </div>
+
+  <script>
+    function updateJam() {
+      const now = new Date();
+      const jam = now.getHours().toString().padStart(2, '0');
+      const menit = now.getMinutes().toString().padStart(2, '0');
+      const detik = now.getSeconds().toString().padStart(2, '0');
+      document.getElementById('jam-digital').textContent = `${jam}:${menit}:${detik}`;
+    }
+    setInterval(updateJam, 1000);
+    updateJam();
+  </script>
 
 </body>
 </html>
